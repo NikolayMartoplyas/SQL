@@ -6,7 +6,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.*;
+
 
 public class SqlHelper {
     private static final QueryRunner QUERY_RUNNER = new QueryRunner();
@@ -14,7 +14,7 @@ public class SqlHelper {
     private SqlHelper(){
     }
     public static Connection getConn() throws SQLException{ //подключение к СУБД
-        return DriverManager.getConnection("app.url", "app", "pass");
+        return DriverManager.getConnection("db.url", "app", "pass");
     }
     @SneakyThrows
     public static void cleanDatabase(){
