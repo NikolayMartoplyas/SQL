@@ -16,23 +16,41 @@ public class BankTest {
     LoginPage loginPage;
 
     @AfterEach
-    void tableСlearingAuthCode(){
+    void tableСlearingAuthCode() {
         cleanAuthCode();
     }
+
     @AfterAll
-    static void clearingAllTables(){
+    static void clearingAllTables() {
         cleanDatabase();
     }
+
     @BeforeEach
-    void setUp(){
+    void setUp() {
         loginPage = open("http://localhost:9999", LoginPage.class);
     }
+
     @Test
-    void shouldSuccesFullLogin(){
+    void shouldSuccesFullLogin() {
         var authInfo = DataHelper.getUser();
         var verificatinPage = loginPage.validLogin(authInfo);
         var verificationCode = SqlHelper.getVerifaicationCode();
         verificatinPage.validCode(verificationCode);
+    }
 
+    @Test
+    void invalidUser() {
+        var authInfo = DataHelper.getRandomUser();
+        loginPage.invalidUser(authInfo);
+        loginPage.error("Ошибка! Неверно указан логин или пароль");
+    }
+
+    @Test
+    void invalidAuthCode() {
+        var authInfo = DataHelper.getUser();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificatinCode = DataHelper.randomVerifai();
+        verificationPage.virify(verificatinCode.getCode());
+        verificationPage.errorMessage("Ошибка! Неверно указан код! Попробуйте ещё раз.");
     }
 }

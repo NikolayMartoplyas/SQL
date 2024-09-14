@@ -14,19 +14,22 @@ public class VerificationPage {
     private final SelenideElement button = $("[data-test-id='action-verify']");
     private final SelenideElement errorNotification = $("[data-test-id='error-notification'] .notification__content");
 
-    public VerificationPage(){
+    public VerificationPage() {
         codeField.shouldBe(visible);
     }
-    public DashBoardPage validCode(String verificationCode){
+
+    public DashBoardPage validCode(String verificationCode) {
         virify(verificationCode);
         return new DashBoardPage();
     }
-    public void virify (String verificatinCode){
+
+    public void virify(String verificatinCode) {
         codeField.setValue(verificatinCode);
         button.click();
     }
-    public void errorMessage(String expectedText){
-        errorNotification.shouldHave(exactText("Ошибка! Неверно указан код! Попробуйте ещё раз."))
+
+    public void errorMessage(String expectedText) {
+        errorNotification.shouldHave(exactText(expectedText))
                 .shouldBe(visible, Duration.ofSeconds(15));
     }
 
